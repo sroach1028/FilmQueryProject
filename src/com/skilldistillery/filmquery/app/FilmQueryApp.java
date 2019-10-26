@@ -18,66 +18,44 @@ public class FilmQueryApp {
 	}
 
 //	private void test() {
-//    Film film = db.findFilmById(100);
-//    if(film != null)
-//    System.out.println(film);
-//    else 
-//    System.out.println("id not found");
-//    Actor actor = db.findActorById(20);
-//    if(actor!= null)
-//    	System.out.println(actor);
-//    else
-//    	System.out.println("id not found");
-//    List<Actor> actorList = db.findActorsByFilmId(100);
-//    for (Actor actor2 : actorList) {
-//		System.out.println(actor2);
-//	}
-//		List<Film> filmsQueryResult = db.findFilmByKeyword("ab");
-//		if (!filmsQueryResult.isEmpty()) {
-//
-//			for (Film film : filmsQueryResult) {
-//				System.out.println(film);
-//
-//			}
-//		} else
-//			System.out.println("no results found");
 //	}
 
 	private void launch() {
-		boolean continueApp;
 		Scanner input = new Scanner(System.in);
-		do {
-			continueApp = startUserInterface(input);
-		} while (continueApp);
+		
+		startUserInterface(input);
+
 		input.close();
 
 	}
 
-	private boolean startUserInterface(Scanner scanner) {
+	private void startUserInterface(Scanner scanner) {
 		boolean continueApp = true;
+		
+		do {
 		System.out.println("1. Look up film by id\n2. Look up film by keyword\n3. Exit");
 		String choice = scanner.next();
 
 		switch (choice) {
-		
+
 		case "1":
 			executeSearchById(scanner);
 			break;
-			
+
 		case "2":
 			executeSearchByKeyword(scanner);
 			break;
-			
+
 		case "3":
-			System.out.println("Goodbye");
+			System.out.println("Goodbye...");
 			continueApp = false;
 			break;
-			
+
 		default:
 			System.out.println("Invalid entry");
 			break;
 		}
-		return continueApp;
+		}while(continueApp);
 
 	}
 
@@ -85,7 +63,7 @@ public class FilmQueryApp {
 		int idChoice = 0;
 		Film searchResult = null;
 		System.out.println("Enter Film ID# (ex: 123)");
-		
+
 		try {
 			idChoice = input.nextInt();
 			searchResult = db.findFilmById(idChoice);
@@ -94,7 +72,7 @@ public class FilmQueryApp {
 		} finally {
 			input.nextLine();
 		}
-		
+
 		if (searchResult == null)
 			System.out.println("No result found");
 		else
