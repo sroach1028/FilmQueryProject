@@ -1,5 +1,6 @@
 package com.skilldistillery.filmquery.app;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class FilmQueryApp {
 
 	private void launch() {
 		Scanner input = new Scanner(System.in);
-		
+
 		startUserInterface(input);
 
 		input.close();
@@ -31,44 +32,45 @@ public class FilmQueryApp {
 
 	private void startUserInterface(Scanner scanner) {
 		boolean continueApp = true;
-		
+
 		do {
-		System.out.println("1. Look up film by id\n2. Look up film by keyword\n3. Exit");
-		String choice = scanner.next();
+			System.out.println("1. Look up film by id\n"
+								+ "2. Look up film by keyword\n"
+								+ "3. Exit");
+			
+			String choice = scanner.next();
 
-		switch (choice) {
+			switch (choice) {
 
-		case "1":
-			executeSearchById(scanner);
-			break;
+			case "1":
+				executeSearchById(scanner);
+				break;
 
-		case "2":
-			executeSearchByKeyword(scanner);
-			break;
+			case "2":
+				executeSearchByKeyword(scanner);
+				break;
 
-		case "3":
-			System.out.println("Goodbye...");
-			continueApp = false;
-			break;
+			case "3":
+				System.out.println("Goodbye...");
+				continueApp = false;
+				break;
 
-		default:
-			System.out.println("Invalid entry");
-			break;
-		}
-		}while(continueApp);
+			default:
+				System.out.println("Invalid entry");
+				break;
+			}
+		} while (continueApp);
 
 	}
 
 	private void executeSearchById(Scanner input) {
-		int idChoice = 0;
 		Film searchResult = null;
 		System.out.println("Enter Film ID# (ex: 123)");
 
 		try {
-			idChoice = input.nextInt();
-			searchResult = db.findFilmById(idChoice);
-		} catch (Exception e) {
-			System.out.println("Invalid entry");
+			searchResult = db.findFilmById(input.nextInt());
+		} catch (InputMismatchException e) {
+			System.out.println("Invalid entry. Ids are in number format");
 		} finally {
 			input.nextLine();
 		}

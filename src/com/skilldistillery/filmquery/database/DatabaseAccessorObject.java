@@ -37,7 +37,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
 			ResultSet res = stmt.executeQuery();
-				
+			
 			if(res.next()) {
 					cast = findActorsByFilmId(filmId);
 					film = new Film(res.getInt("id"), res.getString("title"), 
@@ -73,7 +73,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			
 			if (res.next())
 			actor = new Actor(res.getInt("id"), res.getString("first_name"), res.getString("last_name"));
-			
 			
 			res.close();
 			stmt.close();
