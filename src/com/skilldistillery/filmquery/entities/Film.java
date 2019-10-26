@@ -1,5 +1,7 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.List;
+
 public class Film {
 	private int id;
 	private String title;
@@ -11,7 +13,30 @@ public class Film {
 	private double replacementCost;
 	private String rating;
 	private String specialFeatures;
-
+	private List<Actor> cast;
+	private String filmLanguage;
+	
+	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
+			int length, double replacementCost, String rating, String specialFeatures, List<Actor> cast, String filmLanguage) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.languageId = languageId;
+		this.rentalDuration = rentalDuration;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
+		this.specialFeatures = specialFeatures;
+		this.cast = cast;
+		this.filmLanguage = filmLanguage;
+	}
+	
+	public Film() {
+		super();
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -34,6 +59,14 @@ public class Film {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<Actor> getCast() {
+		return cast;
+	}
+
+	public void setCast(List<Actor> cast) {
+		this.cast = cast;
 	}
 
 	public int getReleaseYear() {
@@ -155,30 +188,12 @@ public class Film {
 		return true;
 	}
 
-	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
-			int length, double replacementCost, String rating, String specialFeatures) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.releaseYear = releaseYear;
-		this.languageId = languageId;
-		this.rentalDuration = rentalDuration;
-		this.length = length;
-		this.replacementCost = replacementCost;
-		this.rating = rating;
-		this.specialFeatures = specialFeatures;
-	}
-
-	public Film() {
-		super();
-	}
 
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
-				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", length=" + length
-				+ ", replacementCost=" + replacementCost + ", rating=" + rating + ", specialFeatures=" + specialFeatures
-				+ "]";
+		return "Title: " + title + "\nReleaseYear: " + releaseYear 
+				+ ", Rating: " + rating+ "\nLanguage: " + filmLanguage + "\nDESCRIPTION: " + description
+				+ "\nCast:    " + cast + "\n";
 	}
+	
 }
