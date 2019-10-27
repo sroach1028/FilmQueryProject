@@ -31,7 +31,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		String user = "student";
 		String pass = "student";
 		String sql = "SELECT * FROM film join language on film.language_id = language.id WHERE film.id = ?";
-
+		
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pass);
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -58,62 +58,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			return film;
 	} 
 		
-	@Override
-	public Actor findActorById(int actorId) {
-		Actor actor = null;
-		String user = "student";
-		String pass = "student";
-		String sql = "SELECT * FROM actor WHERE id = ?";
-
-		try {
-			Connection conn = DriverManager.getConnection(URL, user, pass);
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, actorId);
-			ResultSet res = stmt.executeQuery();
-			
-			if (res.next())
-			actor = new Actor(res.getInt("id"), res.getString("first_name"), res.getString("last_name"));
-			
-			res.close();
-			stmt.close();
-			conn.close();
-		}
-		
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return actor;
-	}
-	@Override
-	public List<Actor> findActorsByFilmId(int filmId) {
-		List<Actor> actorList = new ArrayList<>();;
-		
-		String user = "student";
-		String pass = "student";
-		String sql = "SELECT * FROM actor "
-				+ "join film_actor on actor.id = film_actor.actor_id "
-				+"join film on film.id = film_actor.film_id "
-				+ "WHERE film.id = ?";
-
-		try {
-			Connection conn = DriverManager.getConnection(URL, user, pass);
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, filmId);
-			ResultSet res = stmt.executeQuery();
-			
-			while (res.next())
-				actorList.add(new Actor(res.getInt("id"), res.getString("first_name"), res.getString("last_name")));
-			
-			res.close();
-			stmt.close();
-			conn.close();
-		}
-		
-		catch (SQLException e) {
-			e.printStackTrace();
-		}		
-		return actorList;
-	}
 
 	@Override
 	public List<Film> findFilmByKeyword(String keyword) {
@@ -153,6 +97,61 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return filmList;
 	}
 	
+	@Override
+	public List<Actor> findActorsByFilmId(int filmId) {
+		List<Actor> actorList = new ArrayList<>();;
+		
+		String user = "student";
+		String pass = "student";
+		String sql = "SELECT * FROM actor "
+				+ "join film_actor on actor.id = film_actor.actor_id "
+				+"join film on film.id = film_actor.film_id "
+				+ "WHERE film.id = ?";
+		
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet res = stmt.executeQuery();
+			
+			while (res.next())
+				actorList.add(new Actor(res.getInt("id"), res.getString("first_name"), res.getString("last_name")));
+			
+			res.close();
+			stmt.close();
+			conn.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		return actorList;
+	}
 	
-
+	@Override
+	public Actor findActorById(int actorId) {
+		Actor actor = null;
+		String user = "student";
+		String pass = "student";
+		String sql = "SELECT * FROM actor WHERE id = ?";
+		
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, actorId);
+			ResultSet res = stmt.executeQuery();
+			
+			if (res.next())
+				actor = new Actor(res.getInt("id"), res.getString("first_name"), res.getString("last_name"));
+			
+			res.close();
+			stmt.close();
+			conn.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return actor;
+	}
 }
